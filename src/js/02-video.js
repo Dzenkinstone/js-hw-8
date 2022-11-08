@@ -20,8 +20,9 @@ player.on(
 
 const savedTime = localStorage.getItem(KEY);
 
-if (localStorage.length === 0) {
+if (savedTime) {
+  player.setCurrentTime(JSON.parse(savedTime));
   console.log('error');
 } else {
-  player.setCurrentTime(JSON.parse(savedTime));
+  console.log('error');
 }
