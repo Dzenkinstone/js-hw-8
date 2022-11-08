@@ -16,18 +16,24 @@ function onKeyboardPress(event) {
 }
 
 function populateInput() {
-  const savedString = localStorage.getItem(STORAGE_KEY);
-  const parsedString = JSON.parse(savedString);
-  if (parsedString) {
-    form[0].value = parsedString.email;
-    form[1].value = parsedString.message;
+  try {
+    let savedString = localStorage.getItem(STORAGE_KEY);
+    savedString = JSON.parse(savedString);
+    if (savedString) {
+      Object.entries(savedString).forEach(([name, value]) => {
+        formData[name] = value;
+        form.elements[name].value = value;
+      });
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
 
 function onFormSubmit(event) {
   event.preventDefault();
+  form.elements.email.value = '';
+  form.elements.message.value = '';
   localStorage.clear();
-  form[0].value = '';
-  form[1].value = '';
-  console.log({ email: '', message: '' });
+  console.log(formData);
 }

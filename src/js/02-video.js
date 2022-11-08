@@ -7,10 +7,6 @@ const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 const KEY = 'videoplayer-current-time';
 
-player.on('play', function () {
-  console.log('played the video!');
-});
-
 player.on(
   'timeupdate',
   throttle(function (event) {
@@ -22,4 +18,10 @@ player.on(
   }, 1000)
 );
 
-player.setCurrentTime(JSON.parse(localStorage.getItem(KEY)));
+const savedTime = localStorage.getItem(KEY);
+
+if (localStorage.length === 0) {
+  console.log('error');
+} else {
+  player.setCurrentTime(JSON.parse(savedTime));
+}
